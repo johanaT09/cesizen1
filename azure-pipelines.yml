@@ -1,0 +1,37 @@
+trigger:
+- main
+- JOTE/3
+
+pool:
+  name: 'Default'
+
+steps:
+# --- 1. SETUP ENVIRONNEMENT ---
+- task: NodeTool@0
+  inputs:
+    versionSpec: '20.x'
+  displayName: 'Install Node.js'
+
+# --- 2. BACKEND (Laravel) ---
+- script: |
+    cd backend
+    composer install --no-interaction --prefer-dist
+    if not exist .env copy .env.example .env
+    php artisan key:generate
+  displayName: 'Install & Build Laravel'
+
+# --- 3. FRONTEND (Nuxt/Vue) ---
+- script: |
+    cd frontend
+    npm install
+  displayName: 'Install Nuxt'
+
+# --- 4. SYNC TO GITHUB ---
+- script: |
+    git fetch --unshallow || git fetch --all
+    git config --global user.email "johana@example.com"
+    git config --global user.name "Azure DevOps Pipeline"
+    git remote add github https://$(GH_TOKEN)@github.com/johanaT09/cesizen1.git || git remote set-url github https://$(GH_TOKEN)@github.com/johanaT09/cesizen1.git
+    git push github HEAD:main --force
+  displayName: 'Sync to GitHub'
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
