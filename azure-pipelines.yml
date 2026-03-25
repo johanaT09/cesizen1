@@ -1,0 +1,10 @@
+trigger:
+- main
+- JOTE/3
+
+pool:
+  name: 'Default'  # Obligatoire pour utiliser ton PC
+
+steps:
+- script: echo "Hello, l'agent de Johana fonctionne !"
+  displayName: 'Test de connexion'
