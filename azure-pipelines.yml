@@ -24,8 +24,7 @@ steps:
 - script: |
     cd frontend
     npm install
-    npm run build
-  displayName: 'Install & Build Nuxt'
+  displayName: 'Install Nuxt'
 
 # --- 4. SYNC TO GITHUB ---
 - script: |
