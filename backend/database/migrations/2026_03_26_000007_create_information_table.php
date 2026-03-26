@@ -13,12 +13,10 @@ return new class extends Migration {
             $table->text('contenu_information');
             $table->date('date_publication_information');
             $table->boolean('est_actif');
-            $table->unsignedBigInteger('id_type');
             $table->unsignedBigInteger('id_categorie');
             $table->unsignedBigInteger('id_utilisateur');
             $table->timestamps();
 
-            $table->foreign('id_type')->references('id_type')->on('types');
             $table->foreign('id_categorie')->references('id_categorie')->on('categorie_activite');
             $table->foreign('id_utilisateur')->references('id_utilisateur')->on('utilisateurs');
         });

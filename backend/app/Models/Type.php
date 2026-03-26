@@ -18,10 +18,4 @@ class Type extends Model
     {
         return $this->hasMany(ActiviteDetente::class, 'id_type');
     }
-
-    // Un type a plusieurs informations
-    public function informations()
-    {
-        return $this->hasMany(Information::class, 'id_type');
-    }
 }
